@@ -23,8 +23,6 @@ class Choice:
         self.name = name
         self.wiki = wiki
 
-#Get list of all wikis from fandom
-
 
 @bot.event
 async def on_ready():
