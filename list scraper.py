@@ -13,8 +13,8 @@ def Get_List(URL: str):
     data = data[datasort:]
     
 
-    titleIndex = [i for i in range(len(data)) if data.startswith(" title=", i)] 
-    wikiIndex = [i for i in range(len(data)) if data.startswith(r'">', i)] 
+    titleIndex = [i for i in range(len(data)) if data.startswith(" title=", i)]
+    wikiIndex = [i for i in range(len(data)) if data.startswith(r'">', i)]
 
     for x in titleIndex:
         name = data[x + 7: wikiIndex[titleIndex.index(x)]]
