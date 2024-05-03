@@ -8,8 +8,11 @@ def Get_List(URL: str):
     wikitable = soup.find(class_="mw-parser-output")
 
     data = wikitable.find_all("tr", limit=6)
-    data = data[5]
-    data = str(data)
+    data= str(data)
+
+    realdata = data.find("Canon")
+    data = data[realdata:]
+    
 
     titleIndex = [i for i in range(len(data)) if data.startswith(" title=", i)] 
     wikiIndex = [i for i in range(len(data)) if data.startswith(r'">', i)] 
@@ -25,6 +28,8 @@ def Get_List(URL: str):
 
 games = Get_List("https://wikis.fandom.com/wiki/Category:Games_hub")
 shows = Get_List("https://wikis.fandom.com/wiki/Category:TV_hub")
+movies = Get_List("https://wikis.fandom.com/wiki/Category:Movies_hub")
+music = Get_List("https://wikis.fandom.com/wiki/Category:Music_hub")
 
-print(games)
-print(shows)
+print(games, " <|||> ", shows, " <|||> ", movies, " <|||> ", music)
+#print(games, "<|||>", shows, "<|||>", movies, "<|||>", music)
