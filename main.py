@@ -28,10 +28,12 @@ class Choice:
 async def on_ready():
     print("Connected!")
     try:
-        synced = await bot.tree.sync()
-        print(f"Synced {len(synced)} commands")
+        #synced = await bot.tree.sync()
+        #print(f"Synced {len(synced)} commands")
+        pass
     except Exception as e:
         print(e)
+
 Choice = app_commands.Choice
 @bot.tree.command(name = "wiki", description = "Searches the given wiki for a given query")
 @app_commands.describe(query = "The search subject", wiki = "The wikipedia you want to look up in")

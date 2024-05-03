@@ -69,7 +69,9 @@ async def get_wiki_result(interaction: discord.Interaction, query, wiki):
         if len(search) == 0:
             await interaction.followup.send("No related searches found")
         else:
-            page = (fandom.page(title="Dirt", wiki=wiki.name))
+            result = fandom.random(pages=1, wiki=wiki.name)
+            page_id = result[1]
+            page = fandom.page(pageid=page_id, wiki=wiki.name)
             get_webpage_icon(page.url)
             search = [(t[0],) for t in search]
             search = ''.join(['{}\n'.format(t[0]) for t in search])
