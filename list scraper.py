@@ -9,9 +9,8 @@ def Get_List(URL: str):
 
     data = wikitable.find_all("tr", limit=6)
     data= str(data)
-
-    realdata = data.find("Canon")
-    data = data[realdata:]
+    datasort = data.find("Canon")
+    data = data[datasort:]
     
 
     titleIndex = [i for i in range(len(data)) if data.startswith(" title=", i)] 
