@@ -32,4 +32,3 @@ movies = Get_List("https://wikis.fandom.com/wiki/Category:Movies_hub")
 music = Get_List("https://wikis.fandom.com/wiki/Category:Music_hub")
 
 print(games, " <|||> ", shows, " <|||> ", movies, " <|||> ", music)
-#print(games, "<|||>", shows, "<|||>", movies, "<|||>", music)
