@@ -23,7 +23,6 @@ class Choice:
         self.name = name
         self.wiki = wiki
 
-
 @bot.event
 async def on_ready():
     print("Connected!")
