@@ -1,8 +1,9 @@
 import discord
 import requests
+import os
 from discord import app_commands
 from discord.ext import commands
-
+from dotenv import load_dotenv
 from functions import *
 
 intents = discord.Intents.default()
@@ -10,13 +11,9 @@ intents.message_content = True
 
 bot = commands.Bot(command_prefix='/', intents=intents)
 
-TOK_FILE = "token.txt"
+load_dotenv()
 
-def get_token():
-  tokfile = open(TOK_FILE, 'r')
-  token = tokfile.read()
-  tokfile.close()
-  return token
+TOKEN = os.getenv("TOKEN")
 
 class Choice:
     def __init__(self, name, wiki):
@@ -45,5 +42,4 @@ async def lookup(interaction: discord.Interaction, query: str, wiki: Choice[int]
     await interaction.response.defer()
     await get_wiki_result(interaction, query, wiki)
 
-token = get_token()
-bot.run(token)
+bot.run(TOKEN)
