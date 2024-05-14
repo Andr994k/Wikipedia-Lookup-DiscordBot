@@ -20,6 +20,7 @@ def Get_List(URL: str):
         name = data[x + 7: wikiIndex[titleIndex.index(x)]]
         name = name.replace('"', "")
         name = name.replace(" Wiki", "")
+        name = name.replace(" ", "")
 
         LIST.append(name)
 
