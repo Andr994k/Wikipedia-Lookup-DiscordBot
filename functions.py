@@ -52,37 +52,37 @@ def make_embed(wiki, title, description, page, url) -> tuple:
     get_webpage_icon(page.url)
     file = discord.File(IMG_FILE_PATH, filename="wikiicon.png")
     embed = discord.Embed(title=title, url=url, description=description, color=get_primary_color(), timestamp=datetime.now())
-    embed.set_author(name=wiki.name + " Fandom", url=f"https://{wiki.name}.fandom.com/wiki/", icon_url="attachment://wikiicon.png")
+    embed.set_author(name=wiki + " Fandom", url=f"https://{wiki}.fandom.com/wiki/", icon_url="attachment://wikiicon.png")
     return file, embed
 
 async def get_wiki_result(interaction: discord.Interaction, query, wiki):
     """Gets the result from a wiki and sends it to the interaction, if it fails, sends related searches instead"""
     #Try to make the embed, if it fails, send related searches
-    #try:
-    page = fandom.page(title=query, wiki=wiki.name)
-    if page.content != None:
-        split_string = [page.content[i:i+2000] for i in range(0, len(page.content), 2000)]
+    try:
+        page = fandom.page(title=query, wiki=wiki)
+        if page.content != None:
+            #split_string = [page.content[i:i+2000] for i in range(0, len(page.content), 2000)]
 
-        file, embed = make_embed(wiki=wiki, title=page.title, description=split_string[0], page=page, url=page.url)
-        await interaction.followup.send(file=file, embed=embed)
-    else:
-        raise Exception("Result doesnt exist")
-    #except:
-    await interaction.followup.send("Could not find results, showing related searches")
-    #Search for related pages
-    search = (fandom.search(query, wiki.name))
-    #Make sure it returns atleast one result
-    if len(search) == 0:
-        await interaction.followup.send("No related searches found")
-    else:
-        #Make a list of titles with their respective URLs, the structure []() is for embedding links in discord
-        descriptionlist = []
-        for index, element in enumerate(search):
-            page = fandom.page(pageid=search[index][1], wiki=wiki.name)
-            descriptionlist.append(f"[{page.title}]({page.url})")
-        #Get the first page in the search, used for getting the icon  
-        page = fandom.page(pageid=search[0][1], wiki=wiki.name)
-        #Split the list into a string with newlines for each comma
-        descriptionlist = '\n'.join(descriptionlist)
-        file, embed = make_embed(wiki=wiki, title="Related searches", description=descriptionlist, page=page, url=None)
-        await interaction.followup.send(file=file, embed=embed)
+            file, embed = make_embed(wiki=wiki, title=page.title, description=page.summary, page=page, url=page.url)
+            await interaction.followup.send(file=file, embed=embed)
+        else:
+            raise Exception("Result doesnt exist")
+    except:
+        await interaction.followup.send("Could not find results, showing related searches")
+        #Search for related pages
+        search = (fandom.search(query, wiki))
+        #Make sure it returns atleast one result
+        if len(search) == 0:
+            await interaction.followup.send("No related searches found")
+        else:
+            #Make a list of titles with their respective URLs, the structure []() is for embedding links in discord
+            descriptionlist = []
+            for index, element in enumerate(search):
+                page = fandom.page(pageid=search[index][1], wiki=wiki)
+                descriptionlist.append(f"[{page.title}]({page.url})")
+            #Get the first page in the search, used for getting the icon  
+            page = fandom.page(pageid=search[0][1], wiki=wiki)
+            #Split the list into a string with newlines for each comma
+            descriptionlist = '\n'.join(descriptionlist)
+            file, embed = make_embed(wiki=wiki, title="Related searches", description=descriptionlist, page=page, url=None)
+            await interaction.followup.send(file=file, embed=embed)
