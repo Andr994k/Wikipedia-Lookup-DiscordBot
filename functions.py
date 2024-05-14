@@ -57,12 +57,12 @@ def make_embed(wiki, title, description, page, url) -> tuple:
 
 async def get_wiki_result(interaction: discord.Interaction, query, wiki):
     """Gets the result from a wiki and sends it to the interaction, if it fails, sends related searches instead"""
+    query = query.capitalize()
+    wiki = wiki.capitalize()
     #Try to make the embed, if it fails, send related searches
     try:
         page = fandom.page(title=query, wiki=wiki)
         if page.content != None:
-            #split_string = [page.content[i:i+2000] for i in range(0, len(page.content), 2000)]
-
             file, embed = make_embed(wiki=wiki, title=page.title, description=page.summary, page=page, url=page.url)
             await interaction.followup.send(file=file, embed=embed)
         else:
