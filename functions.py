@@ -93,9 +93,11 @@ def make_embed(wiki, title, description, page, url) -> tuple:
 async def get_wiki_result(interaction: discord.Interaction, query, wiki)  -> None:
     """Gets the result from a wiki and sends it to the interaction, if it fails, sends related searches instead"""
 
-    #Use list comprehension to capitalize after each space in the given query and wiki
+    #Use list comprehension to capitalize after each space in the given query
     query = ' '.join(word.capitalize() for word in query.split(' '))
     wiki = ' '.join(word.capitalize() for word in wiki.split(' '))
+    #Remove all spaces from the inputted wiki
+    wiki = wiki.replace(" ", "")
     #Try to make the embed, if it fails, send related searches
     try:
         page = fandom.page(title=query, wiki=wiki)
