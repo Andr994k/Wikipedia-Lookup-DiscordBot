@@ -2,6 +2,7 @@ import fandom
 import requests
 import discord
 import fast_colorthief
+import os
 from datetime import datetime
 from PIL import Image
 from bs4 import BeautifulSoup
@@ -36,8 +37,13 @@ def get_webpage_icon(url) -> None:
         #Open it using BytesIO (magic)
         img = Image.open(BytesIO(icon.content))
 
-        #Save the image/override the previous image (don't want a clutter of images building up)
-        img.save(IMG_FILE_PATH)
+
+        if os.path.exists("./imgfiles"):
+            #Save the image/override the previous image (don't want a clutter of images building up)
+            img.save(IMG_FILE_PATH)
+        else:
+            os.makedirs("./imgfiles")
+            img.save(IMG_FILE_PATH)
 
 def get_primary_color() -> int:
     """Get the primary color of an image (used for determining the color of the discord embed)"""
@@ -57,8 +63,10 @@ def make_embed(wiki, title, description, page, url) -> tuple:
 
 async def get_wiki_result(interaction: discord.Interaction, query, wiki):
     """Gets the result from a wiki and sends it to the interaction, if it fails, sends related searches instead"""
-    query = query.capitalize()
-    wiki = wiki.capitalize()
+
+    #Use list comprehension to capitalize after each space in the given query and wiki
+    query = ' '.join(word.capitalize() for word in query.split(' '))
+    wiki = ' '.join(word.capitalize() for word in wiki.split(' '))
     #Try to make the embed, if it fails, send related searches
     try:
         page = fandom.page(title=query, wiki=wiki)
