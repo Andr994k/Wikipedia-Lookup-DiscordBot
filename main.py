@@ -55,17 +55,12 @@ async def lookup(interaction: discord.Interaction, query: str, wiki: str):
 @bot.tree.command(name = "wikilist", description = "Lists the available wikis")
 @app_commands.describe(category = "The category of wikis")
 @app_commands.choices(category=[
-    #[Choice(name=key, value=value) for key, value in zip(wikidict.keys(), numberlist)],
-    Choice(name='Games', value=1),
-    Choice(name='Shows', value=2),
-    Choice(name='Movies', value=3),
-    Choice(name='Music', value=4),
-    Choice(name='Books', value=5),
-])
+    *[app_commands.Choice(name=key.capitalize(), value=value) for key, value in zip(wikidict.keys(), numberlist)],]
+)
 async def wikilist(interaction: discord.Interaction, category: Choice[int]):
     await interaction.response.defer()
     for key, value in wikidict.items():
         if category.name == key.capitalize():
-            await interaction.followup.send(f"Here are the available wikis for **{key}**:\n{value}")
+            await interaction.followup.send(f"Here are the available wikis for **{key.capitalize()}**:\n{value}")
 
 bot.run(TOKEN)
