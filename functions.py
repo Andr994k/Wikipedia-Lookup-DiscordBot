@@ -11,7 +11,7 @@ from io import BytesIO
 
 IMG_FILE_PATH = "./imgfiles/wikiicon.png"
 
-def get_List(URL: str) -> list:
+def get_list_of_wikis(URL: str) -> list:
     """Makes a list of all the wikis of the given hub page from the wiki of wikis, example: https://wikis.fandom.com/wiki/Category:Games_hub"""
     list_of_wikis = []
     #Get the HTML data from the page and parse it
@@ -63,7 +63,7 @@ def get_webpage_icon(url) -> None:
         #Make a new request for the found image URL
         icon = requests.get(icon_url)
 
-        #Open it using BytesIO (magic)
+        #Open it using BytesIO (magic) and pillow
         img = Image.open(BytesIO(icon.content))
 
 

@@ -30,15 +30,15 @@ async def on_ready():
         print(e)
 
 wikidict = {
-    "games": get_List("https://wikis.fandom.com/wiki/Category:Games_hub"),
-    "shows": get_List("https://wikis.fandom.com/wiki/Category:TV_hub"),
-    "movies": get_List("https://wikis.fandom.com/wiki/Category:Movies_hub"),
-    "music": get_List("https://wikis.fandom.com/wiki/Category:Music_hub"),
-    "books": get_List("https://wikis.fandom.com/wiki/Category:Books_hub"),
-    "lifestyle": get_List("https://wikis.fandom.com/wiki/Category:Lifestyle_hub"),
-    "other": get_List("https://wikis.fandom.com/wiki/Category:Without_hub"),
-    "comics": get_List("https://wikis.fandom.com/wiki/Category:Comics_hub"),
-    "tv": get_List("https://wikis.fandom.com/wiki/Category:TV_hub"),
+    "games": get_list_of_wikis("https://wikis.fandom.com/wiki/Category:Games_hub"),
+    "shows": get_list_of_wikis("https://wikis.fandom.com/wiki/Category:TV_hub"),
+    "movies": get_list_of_wikis("https://wikis.fandom.com/wiki/Category:Movies_hub"),
+    "music": get_list_of_wikis("https://wikis.fandom.com/wiki/Category:Music_hub"),
+    "books": get_list_of_wikis("https://wikis.fandom.com/wiki/Category:Books_hub"),
+    "lifestyle": get_list_of_wikis("https://wikis.fandom.com/wiki/Category:Lifestyle_hub"),
+    "other": get_list_of_wikis("https://wikis.fandom.com/wiki/Category:Without_hub"),
+    "comics": get_list_of_wikis("https://wikis.fandom.com/wiki/Category:Comics_hub"),
+    "tv": get_list_of_wikis("https://wikis.fandom.com/wiki/Category:TV_hub"),
 }
 
 numberlist = [1,2,3,4,5,6,7,8,9]
