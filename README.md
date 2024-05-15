@@ -1,2 +1,2 @@
 # Wikipedia-Lookup-DiscordBot
-A discord bot for looking up MediaWiki Wikipedias
+A discord bot for looking up fandom.com Wikipedias
