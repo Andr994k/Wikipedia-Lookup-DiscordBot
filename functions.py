@@ -11,6 +11,35 @@ from io import BytesIO
 
 IMG_FILE_PATH = "./imgfiles/wikiicon.png"
 
+def get_List(URL: str) -> list:
+    """Makes a list of all the wikis of the given hub page from the wiki of wikis, example: https://wikis.fandom.com/wiki/Category:Games_hub"""
+    list_of_wikis = []
+    #Get the HTML data from the page and parse it
+    page = requests.get(URL)
+    soup = BeautifulSoup(page.content, "html.parser")
+    wiki_table = soup.find(class_="mw-parser-output")
+
+    #"tr" indicates a table on the page, where the list of wikis is most often stored
+    data = wiki_table.find_all("tr", limit=6)
+    data= str(data)
+    #The title of the table with all wikis is "Canon"
+    datasort = data.find("Canon")
+    data = data[datasort:]
+    
+    #We use list comprehension to search for all occurences of title= and ">
+    title_index = [i for i in range(len(data)) if data.startswith(" title=", i)]
+    wiki_index = [i for i in range(len(data)) if data.startswith(r'">', i)]
+
+    #We remove certain fixed-length parts and clean the data up to only include the title
+    for x in title_index:
+        name = data[x + 7: wiki_index[title_index.index(x)]]
+        name = name.replace('"', "")
+        name = name.replace(" Wiki", "")
+
+        list_of_wikis.append(name)
+
+    return list_of_wikis
+
 def get_webpage_icon(url) -> None:
     """Get the icon of a webpage and save it to a file"""
     #Get wiki and parse it
@@ -61,7 +90,7 @@ def make_embed(wiki, title, description, page, url) -> tuple:
     embed.set_author(name=wiki + " Fandom", url=f"https://{wiki}.fandom.com/wiki/", icon_url="attachment://wikiicon.png")
     return file, embed
 
-async def get_wiki_result(interaction: discord.Interaction, query, wiki):
+async def get_wiki_result(interaction: discord.Interaction, query, wiki)  -> None:
     """Gets the result from a wiki and sends it to the interaction, if it fails, sends related searches instead"""
 
     #Use list comprehension to capitalize after each space in the given query and wiki
