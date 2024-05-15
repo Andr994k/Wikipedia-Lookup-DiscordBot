@@ -25,8 +25,8 @@ class Choice:
 async def on_ready():
     print("Connected!")
     try:
-        #synced = await bot.tree.sync()
-        #print(f"Synced {len(synced)} commands")
+        synced = await bot.tree.sync()
+        print(f"Synced {len(synced)} commands")
         pass
     except Exception as e:
         print(e)
